@@ -67,12 +67,13 @@ int main (int argc, char **argv) {
 	//for(int i = 0; i<n; i++)
 		//printf("%s\n", variableNames[i]);	
   //cria o vetor de derivadas primeiras e guarda o valor calculado em frstDerivEval
-  for (int i = 0; i < count; i++)
+  for (int i = 0; i < n; i++) {
     firstDerivatives[i] = evaluator_derivative(func, variableNames[i]);
+  }
 
   //cria a matriz de derivadas secundárias
-  for (int i = 0; i < count; i++) 
-		for (int j = 0; j < count; j++)
+  for (int i = 0; i < n; i++) 
+		for (int j = 0; j < n; j++)
   		secondDerivatives[i][j] = evaluator_derivative(firstDerivatives[i], variableNames[j]);
 	
 	for (int i = 0; i < maxIter; i++) {
@@ -81,7 +82,6 @@ int main (int argc, char **argv) {
 		//printf("%d\t%f\n", i, norm(derivEvalNewMod, n));
 		if (norm(derivEvalNewMod, n) < epsilon)
 			break; 
-		printf("EBUG\n");
 		// limita a atualização da matriz de coeficientes da hessiana de acordo com os hess steps
 		//Calcula a hessiana e faz a fatoração L e U
 		if (! (i%hessSteps)){
