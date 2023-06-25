@@ -12,17 +12,17 @@ m_diag* createDoubleMatrixD(int n){
 	int i = 0;
 	for(gap = -n/2; gap<n/2; gap++){
 		tmp->diags[i] = (double*) malloc(n-abs(gap) * sizeof(double)); 
-		i++
+		i++;
 	}
 
 	return tmp;
 }
 
 //libera uma matriz k-diagonal
-void freeDoubleMatrixD(m_diagi* m){
+void freeDoubleMatrixD(m_diag* m){
 	for(int i = 0; i<m->k; i++)
-		free(m->diag[0]);
-	free(m->diag);
+		free(m->diags[0]);
+	free(m->diags);
 	free(m);
 }
 
@@ -46,6 +46,22 @@ void*** createVoidMatrix (int n) {
     for (int i = 0; i < n; i++)
         matrix[i] = malloc(sizeof(void*) * n);
     return matrix;
+}
+
+char ** createVariableNamesVector (int n) {
+	char **aux = malloc (sizeof(char *) * n);
+
+	for (int i = 0; i < n; i ++)
+		aux[i] = malloc (sizeof(char) * 25);
+	
+	return aux;
+}
+
+void freeVariableNamesVector (int n, char **vector) {
+	for (int i = 0; i < n; i++)
+		free(vector[i]);
+	
+	free(vector);
 }
 
 //libera espaço de uma matriz de doubles

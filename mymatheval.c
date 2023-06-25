@@ -149,3 +149,9 @@ double __Rosenbrock_d_2nd(double *x, int n, int i, int j) {
 	}
 	return 0;
 }
+
+void evaluator_get_variables(char **variableNames, int n) {
+	for (int i = 0; i < n; i++) {
+		snprintf(variableNames[i], 25,"x%d", i+1);
+	}
+}

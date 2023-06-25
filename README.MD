@@ -1,7 +1,7 @@
 ## TODO 
 [x] Remover a função de pivoteamento parcial
 [x] Colocar a lib do professor no lugar da libmatheval original
-[ ] Resolver o problema da função evaluator_get_variables. Acredito que NÃO seja
+[x] Resolver o problema da função evaluator_get_variables. Acredito que NÃO seja
 problema na função em si. Em último caso desenvolver a própria função
 [ ] Testar o alocamento e desalocamento da matriz k-diagonal
 [ ] Adaptar as funções para usar essa struct nova

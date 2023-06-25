@@ -19,11 +19,15 @@ typedef struct{
 
 m_diag* createDoubleMatrixD(int n);
 
-void freeDoubleMatrixD(m_diagi* m);
+void freeDoubleMatrixD(m_diag* m);
 
 double** createDoubleMatrix (int n);
 
 void*** createVoidMatrix (int n);
+
+char ** createVariableNamesVector(int n);
+
+void freeVariableNamesVector (int n, char **vector);
 
 void freeDoubleMatrix (int n, double **matrix);
 

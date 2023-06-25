@@ -2,9 +2,7 @@
 // Guiusepe Oneda Dal Pai - GRR20210572
 // Fernando Gbur dos Santos - GRR20211761
 #include "matrixOperations.h"
-#include "mathOperations.h"
 #include "iolib.h"
-#include <matheval.h>
 
 int main (int argc, char **argv) {
 	//Declaração das variáveis do programa
@@ -48,6 +46,7 @@ int main (int argc, char **argv) {
 	copyInitialVector(n, xInitial, xVecNewMod);
 	yNewMod						= malloc (sizeof(double) * n);
 	deltaNewMod				= malloc (sizeof(double) * n);
+	variableNames       = createVariableNamesVector(n);
 	firstDerivatives 	= malloc (sizeof(void*) * n);
 	derivEvalNewMod		= malloc (sizeof(double) * n);
 	secondDerivatives = createVoidMatrix(n);
@@ -63,9 +62,13 @@ int main (int argc, char **argv) {
   assert(func);
   //coloca as variáveis da função no vetor variableNames e quantidade delas em count
   printf("Antesz\n");
-	evaluator_get_variables(func, &variableNames, &count);
+	evaluator_get_variables(variableNames, n);
 	printf("Depois\n");
 
+	for (int i = 0; i < n; i++)
+		printf("%s\n" , variableNames[i]);
+	
+	return 0;
   //cria o vetor de derivadas primeiras e guarda o valor calculado em frstDerivEval
   for (int i = 0; i < count; i++)
     firstDerivatives[i] = evaluator_derivative(func, variableNames[i]);
@@ -121,6 +124,7 @@ int main (int argc, char **argv) {
 	freeDoubleMatrix(n, l_NewMod);
 	freeDoubleMatrix(n, u_NewMod);
   freeVoidMatrix(n, secondDerivatives);
+  freeVariableNamesVector(n , variableNames);
   free(funcString);
 	if(desviarSaida) fclose(output);
 	return retorno;

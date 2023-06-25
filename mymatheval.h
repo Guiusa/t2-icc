@@ -40,4 +40,6 @@ double __Rosenbrock(double *x, int n);
 double __Rosenbrock_d_1st(double *x, int n, int i);
 double __Rosenbrock_d_2nd(double *x, int n, int i, int j);
 
+void evaluator_get_variables(char **variableNames, int n);
+
 #endif
