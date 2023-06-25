@@ -39,13 +39,16 @@ void createHessCoefficientsMatrix (void ***secondDerivatives, double **hessMatri
     for (int i = 0; i < count; i++)
         for (int j = 0; j < count; j++)
             hessMatrix[i][j] = evaluator_evaluate(secondDerivatives[i][j], count, names, Xvector);
-    
     return;
 }
 
+//Calcula as derivadas segundas usando a estrutura de matriz k-diagonal
+void createHessCoefficientsMatrixD (void ***secondDerivatives, m_diag *hessMatrixD, char **names, int count, double *Xvector){
+	return;
+}
+
 //Usa a libmatheval para pegar cada derivada primária e calcular seu valor
-void evalueteFirstDerivatives (void **firstDerivatives, double* frstDerivEval, char **names,
-int count, double *Xvector){
+void evalueteFirstDerivatives (void **firstDerivatives, double* frstDerivEval, char **names, int count, double *Xvector){
 	for(int i = 0; i<count; i++)
 		frstDerivEval[i] = evaluator_evaluate(firstDerivatives[i], count, names, Xvector);
 	return;

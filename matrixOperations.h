@@ -7,7 +7,6 @@
 #include <assert.h>
 #include <math.h>
 #include "mymatheval.h"
-//#include <matheval.h>
 
 //a matriz é k diagonal, de forma que a diagonal principal tem k elementos, e 
 //cada diagonal subsequente tem k-g elementos, onde g é o tamanho do gap.
@@ -17,7 +16,7 @@ typedef struct{
 	int k;
 } m_diag;
 
-m_diag* createDoubleMatrixD(int n);
+m_diag* createDoubleMatrixD(int n, int k);
 
 void freeDoubleMatrixD(m_diag* m);
 

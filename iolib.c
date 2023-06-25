@@ -26,19 +26,17 @@ void returnsError(char* err, char* usg){
 		printf("\033[1;42mUSAGE: %s\033[0m\n", usg);
 }
 
-void printStep(FILE* output, void *func, int count, int execNewMod, char **names, double *xVecNewMod, int iter){
+void printStep(FILE* output, void *func, int count, char **names, double *xVecNewMod, int iter){
 	double rNewMod = evaluator_evaluate(func, count, names, xVecNewMod);
 	
 	if(output == NULL){
 		printf("%d\t|\t", iter);
-		if(execNewMod)
-			printf("%1.25lf", rNewMod);
+		printf("%1.25lf", rNewMod);
 		printf("\n");
 	}
 	else {
 		fprintf(output, "%d\t|\t", iter);
-		if(execNewMod)
-			fprintf(output, "%1.25lf", rNewMod);
+		fprintf(output, "%1.25lf", rNewMod);
 		fprintf(output, "\n");
 	}
 }

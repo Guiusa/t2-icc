@@ -12,6 +12,6 @@ void printDoubleVector(double *v, int s);
 
 void returnsError(char* err, char* usg);
 
-void printStep(FILE* output, void *func, int count, int execNewMod, char **names, double *xVecNewMod, int iter);
+void printStep(FILE* output, void *func, int count, char **names, double *xVecNewMod, int iter);
 
 void generalPrint(int n, int iter, double **hess, double **L, double **U, double *frstDerivEval, double *y, double *delta, double* xVector);

@@ -2,7 +2,7 @@
 # Guiusepe Oneda Dal Pai - GRR20210572
 # Fernando Gbur dos Santos - GRR20211761
 
-FLAGS = -O3 -mavx -march=native -O3 
+FLAGS = -O3 -mavx -march=native -O3 -g
 OBJS = matrixOperations.c mathOperations.c iolib.c mymatheval.c
 
 all:

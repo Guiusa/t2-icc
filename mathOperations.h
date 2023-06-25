@@ -7,12 +7,13 @@
 #include "matrixOperations.h"
 #include "iolib.h"
 #include "mymatheval.h"
-//#include <matheval.h>
 #define STR_SIZE_LIMIT 25
 
 void generateStringFunction (char *funcString, int func1, int func2);
 
 void createHessCoefficientsMatrix (void ***secondDerivatives, double **hessMatrix, char **names, int count, double *Xvector);
+void createHessCoefficientsMatrixD (void ***secondDerivatives, m_diag *hessMatrix, char **names, int count, double *Xvector);
+
 
 void evalueteFirstDerivatives (void **firstDerivatives, double* frstDerivEval, char **names, int count, double *Xvector);
 

@@ -4,26 +4,22 @@
 #include "matrixOperations.h"
 
 //aloca uma matrix k-diagonal
-m_diag* createDoubleMatrixD(int n){
+m_diag* createDoubleMatrixD(int n, int k){
 	m_diag* tmp = (m_diag*) malloc(sizeof(m_diag));
-	tmp->diags = (double**) malloc(sizeof(double**));
-	tmp->k = n;
+	tmp->diags = (double**) malloc(k * sizeof(double*));
+	tmp->k = k;
 	int gap;
 	int i = 0;
-	for(gap = -n/2; gap<n/2; gap++){
-		tmp->diags[i] = (double*) malloc(n-abs(gap) * sizeof(double)); 
-		i++;
-	}
-
+	for(gap = -k/2; gap<=k/2; gap++, i++)
+		tmp->diags[i] = (double*) malloc((n-abs(gap)) * sizeof(double)); 
 	return tmp;
 }
 
 //libera uma matriz k-diagonal
-void freeDoubleMatrixD(m_diag* m){
+void freeDoubleMatrixD(m_diag *m){
 	for(int i = 0; i<m->k; i++)
-		free(m->diags[0]);
+		free(m->diags[i]);
 	free(m->diags);
-	free(m);
 }
 
 // Aloca uma matriz de n*n doubles
@@ -49,10 +45,10 @@ void*** createVoidMatrix (int n) {
 }
 
 char ** createVariableNamesVector (int n) {
-	char **aux = malloc (sizeof(char *) * n);
+	char **aux = (char**) malloc (sizeof(char *) * n);
 
 	for (int i = 0; i < n; i ++)
-		aux[i] = malloc (sizeof(char) * 25);
+		aux[i] = (char*) malloc (sizeof(char) * 25);
 	
 	return aux;
 }
@@ -75,8 +71,8 @@ void freeDoubleMatrix (int n, double **matrix) {
 //libera espaço da matriz de ponteiros pra void
 void freeVoidMatrix (int n, void ***matrix) {
     for (int i = 0; i < n; i++){
-		for(int j=0; j<n; j++)
-			evaluator_destroy(matrix[i][j]);
+		//for(int j=0; j<n; j++)
+			//evaluator_destroy(matrix[i][j]);
 		free(matrix[i]);
 	}
     free(matrix);
@@ -84,8 +80,8 @@ void freeVoidMatrix (int n, void ***matrix) {
 
 //libera espaço dos objetos da libmatheval
 void freeVoidVector(int n, void** v){
-	for (int i=0; i<n; i++)
-		evaluator_destroy(v[i]);
+	//for (int i=0; i<n; i++)
+		//evaluator_destroy(v[i]);
 	free(v);
 }
 
