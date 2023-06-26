@@ -13,7 +13,7 @@ int main (int argc, char **argv) {
   int n, k, func1, func2 , count, maxIter, hessSteps;
   char *funcString;
   void **firstDerivatives;
-  void ***secondDerivatives;
+  void **secondDerivatives;
   char **variableNames;
   double xInitial, epsilon;
   double *xVecNewMod, *yNewMod, *deltaNewMod;
@@ -50,7 +50,8 @@ int main (int argc, char **argv) {
 	variableNames       = createVariableNamesVector(n);
 	firstDerivatives 	= malloc (sizeof(void*) * n);
 	derivEvalNewMod		= malloc (sizeof(double) * n);
-	secondDerivatives = createVoidMatrix(n);
+	//secondDerivatives = createVoidMatrix(n);
+	secondDerivatives   = malloc (sizeof(void*) * n * n);
 	hessNewMod 				= createDoubleMatrix(n);
 	l_NewMod 					= createDoubleMatrix(n);
 	u_NewMod					= createDoubleMatrix(n);
@@ -74,7 +75,7 @@ int main (int argc, char **argv) {
   //cria a matriz de derivadas secundárias
   for (int i = 0; i < n; i++) 
 		for (int j = 0; j < n; j++)
-  		secondDerivatives[i][j] = evaluator_derivative(firstDerivatives[i], variableNames[j]);
+    		secondDerivatives[(i * n) + j] = evaluator_derivative(firstDerivatives[i], variableNames[j]);
 	
 	for (int i = 0; i < maxIter; i++) {
 		evalueteFirstDerivatives(firstDerivatives, derivEvalNewMod, variableNames, n, xVecNewMod);
@@ -119,7 +120,7 @@ int main (int argc, char **argv) {
 	freeDoubleMatrix(n, hessNewMod);
 	freeDoubleMatrix(n, l_NewMod);
 	freeDoubleMatrix(n, u_NewMod);
-  freeVoidMatrix(n, secondDerivatives);
+	free(secondDerivatives);
   freeVariableNamesVector(n , variableNames);
   free(funcString);
 	freeDoubleMatrixD(hessD);

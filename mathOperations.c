@@ -35,10 +35,10 @@ void generateStringFunction (char *funcString, int func1, int func2) {
 
 //Usa a libmatheval para pegar cada derivada secundária e calcular seu valor
 //Com o vetor das variáveis
-void createHessCoefficientsMatrix (void ***secondDerivatives, double **hessMatrix, char **names, int count, double *Xvector) {
+void createHessCoefficientsMatrix (void **secondDerivatives, double **hessMatrix, char **names, int count, double *Xvector) {
     for (int i = 0; i < count; i++)
         for (int j = 0; j < count; j++)
-            hessMatrix[i][j] = evaluator_evaluate(secondDerivatives[i][j], count, names, Xvector);
+            hessMatrix[i][j] = evaluator_evaluate(secondDerivatives[(i * count) + j], count, names, Xvector);
     return;
 }
 
