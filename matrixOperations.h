@@ -8,11 +8,19 @@
 #include <math.h>
 #include "mymatheval.h"
 
+
+//estrutura que armazena o vetor de doubles de cada diagonal. A variável de
+//tamanho serve para armazenar quantos elementos foram inseridos no vetor
+typedef struct {
+	double *vet;
+	int tam;
+} t_vet;
+
 //a matriz é k diagonal, de forma que a diagonal principal tem k elementos, e 
 //cada diagonal subsequente tem k-g elementos, onde g é o tamanho do gap.
 // exemplo: com k igual a 3, diags tem 1 vetor com 3 elementos e 2 com 2 elems
 typedef struct{
-	double **diags;
+	t_vet *diags;
 	int k;
 } m_diag;
 

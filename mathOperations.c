@@ -43,7 +43,29 @@ void createHessCoefficientsMatrix (void **secondDerivatives, double **hessMatrix
 }
 
 //Calcula as derivadas segundas usando a estrutura de matriz k-diagonal
-void createHessCoefficientsMatrixD (void ***secondDerivatives, m_diag *hessMatrixD, char **names, int count, double *Xvector){
+void createHessCoefficientsMatrixD (void **secondDerivatives, m_diag *hessMatrixD, char **names, int count, int k, double *Xvector){
+	
+	//numero de diagonais da matriz k-diagonal
+	int diags;
+
+	int aux = k;
+	
+	//primeiro loop para calcular o "quadrado" da matriz k-diagonal
+	for (int i = 0; i < (k/2+1); i++) {
+		diags = aux / 2;
+		for (int j = 0; j < (k/2+1); j++; diags++) {
+			hessMatrixD->diags[diags]->vet[hessMatrixD->diags[diags]->tam++] = evaluator_evaluate(secondDerivatives[(i * count) + j], count, names, Xvector);
+		}
+		aux -= 2;
+	}
+	
+	int j = k/2+1;
+	diags = k-1;
+	for (int i = 1; i < k/2+1; i++; diags--) {
+		hessMatrixD->diags[diags]->vet[hessMatrixD->diags[diags]->tam++] = evaluator_evaluate(secondDerivatives[(i * count) + j], count, names, Xvector);
+	}
+	
+	
 	return;
 }
 

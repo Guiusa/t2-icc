@@ -12,7 +12,7 @@
 void generateStringFunction (char *funcString, int func1, int func2);
 
 void createHessCoefficientsMatrix (void **secondDerivatives, double **hessMatrix, char **names, int count, double *Xvector);
-void createHessCoefficientsMatrixD (void ***secondDerivatives, m_diag *hessMatrix, char **names, int count, double *Xvector);
+void createHessCoefficientsMatrixD (void ***secondDerivatives, m_diag *hessMatrix, char **names, int count, int k, double *Xvector);
 
 
 void evalueteFirstDerivatives (void **firstDerivatives, double* frstDerivEval, char **names, int count, double *Xvector);

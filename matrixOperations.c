@@ -6,12 +6,14 @@
 //aloca uma matrix k-diagonal
 m_diag* createDoubleMatrixD(int n, int k){
 	m_diag* tmp = (m_diag*) malloc(sizeof(m_diag));
-	tmp->diags = (double**) malloc(k * sizeof(double*));
+	tmp->diags = malloc(k * sizeof(t_vet));
 	tmp->k = k;
 	int gap;
 	int i = 0;
-	for(gap = -k/2; gap<=k/2; gap++, i++)
-		tmp->diags[i] = (double*) malloc((n-abs(gap)) * sizeof(double)); 
+	for(gap = -k/2; gap<=k/2; gap++, i++) {
+		tmp->diags[i]->vet = (double*) malloc((n-abs(gap)) * sizeof(double));
+		tmp->diags[i]->tam = 0;
+	}
 	return tmp;
 }
 

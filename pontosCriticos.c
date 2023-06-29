@@ -88,6 +88,7 @@ int main (int argc, char **argv) {
 		if (! (i%hessSteps)){
 			createHessCoefficientsMatrix(secondDerivatives, hessNewMod, variableNames, n, xVecNewMod);
 			copy_matrixes(hessNewMod, u_NewMod, n);
+			printDoubleMatrix(hessNewMod, n);
 			gen_l_u(l_NewMod, u_NewMod, n);
 		}
 
