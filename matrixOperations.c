@@ -4,15 +4,15 @@
 #include "matrixOperations.h"
 
 //aloca uma matrix k-diagonal
-m_diag* createDoubleMatrixD(int n, int k){
+	m_diag* createDoubleMatrixD(int n, int k){
 	m_diag* tmp = (m_diag*) malloc(sizeof(m_diag));
 	tmp->diags = malloc(k * sizeof(t_vet));
 	tmp->k = k;
 	int gap;
 	int i = 0;
 	for(gap = -k/2; gap<=k/2; gap++, i++) {
-		tmp->diags[i]->vet = (double*) malloc((n-abs(gap)) * sizeof(double));
-		tmp->diags[i]->tam = 0;
+		tmp->diags[i].vet = (double*) malloc((n-abs(gap)) * sizeof(double));
+		tmp->diags[i].tam = 0;
 	}
 	return tmp;
 }
@@ -20,8 +20,19 @@ m_diag* createDoubleMatrixD(int n, int k){
 //libera uma matriz k-diagonal
 void freeDoubleMatrixD(m_diag *m){
 	for(int i = 0; i<m->k; i++)
-		free(m->diags[i]);
+		free(m->diags[i].vet);
 	free(m->diags);
+	free(m);
+}
+
+//printa matriz diagonal
+void printMatrixDiag(m_diag* m){
+	for(int i = 0; i<m->k; i++){                                                  
+   t_vet* tmp = &m->diags[i];                                                   
+     for(int j = 0; j<tmp->tam; j++)                                             
+       printf("%.4lf ", tmp->vet[j]);                                            
+       printf("\n");                                                               
+   }
 }
 
 // Aloca uma matriz de n*n doubles
@@ -210,6 +221,26 @@ void gen_l_u(double **l, double **u, int s){
 	}
 
 	return;
+}
+
+void gen_l_u_diag(m_diag *m, double** l, double** u, int s){
+	initial_l(l, s);
+	int k = m->k;
+	int princ = k/2;
+	int aux = princ;
+	for(int j = 0; j<s; j++){
+		double diag_p = m->diags[princ].vet[j];
+		
+		for(int i = 1; i<=aux; i++){
+			//printf("Diagonal é %d %d\n", princ+i, j);
+			printf("%.3lf %.3lf\n", m->diags[princ-i].vet[j], diag_p);
+			double mp = m->diags[princ-i].vet[j] / diag_p;
+			
+			l[j+i][j] = mp;
+		}
+		if(j>=s-princ-1) aux--;
+	}
+
 }
 
 //Realiza o primeiro passo da multiplicação com L e U

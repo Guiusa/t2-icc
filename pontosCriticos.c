@@ -19,6 +19,7 @@ int main (int argc, char **argv) {
   double *xVecNewMod, *yNewMod, *deltaNewMod;
   double *derivEvalNewMod;
 	double **hessNewMod, **l_NewMod, **u_NewMod;
+	double** l_test;
 	m_diag* hessD;
   int r = scanf ("%d %d %lf %lf %d %d" , &n, &k, &xInitial, &epsilon, &maxIter, &hessSteps);
 	//Se n e k não forem válidos, retorna erro e para execução
@@ -56,6 +57,7 @@ int main (int argc, char **argv) {
 	l_NewMod 					= createDoubleMatrix(n);
 	u_NewMod					= createDoubleMatrix(n);
 	hessD							= createDoubleMatrixD(n, k);
+	l_test						= createDoubleMatrix(n);
 
 	//Cria a string que descreve a função para a libmatheval
 	generateStringFunction(funcString, func1, func2);
@@ -87,9 +89,23 @@ int main (int argc, char **argv) {
 		//Calcula a hessiana e faz a fatoração L e U
 		if (! (i%hessSteps)){
 			createHessCoefficientsMatrix(secondDerivatives, hessNewMod, variableNames, n, xVecNewMod);
-			copy_matrixes(hessNewMod, u_NewMod, n);
+			createHessCoefficientsMatrixDiag(secondDerivatives, hessD, variableNames, n, xVecNewMod);
+		
+			printf("Matriz de diagonais\n");
+			printMatrixDiag(hessD);
+			printf("\n");
 			printDoubleMatrix(hessNewMod, n);
+			printf("\n");
+
+
+			copy_matrixes(hessNewMod, u_NewMod, n);
 			gen_l_u(l_NewMod, u_NewMod, n);
+			gen_l_u_diag(hessD, l_test, u_NewMod, n);
+			//printDoubleMatrix(u_NewMod, n);
+			//printf("\n");
+			printDoubleMatrix(l_NewMod, n);
+			printf("\n");
+			printDoubleMatrix(l_test, n);
 		}
 
 		//Gera o y que é L*y = frstDeriv
@@ -112,7 +128,6 @@ int main (int argc, char **argv) {
 		
 	//Libera todas as variáveis dinâmicas
 	liberar:
-	//evaluator_destroy(func);
   free(xVecNewMod);
 	free(yNewMod);
 	free(deltaNewMod);

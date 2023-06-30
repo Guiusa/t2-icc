@@ -42,30 +42,54 @@ void createHessCoefficientsMatrix (void **secondDerivatives, double **hessMatrix
     return;
 }
 
-//Calcula as derivadas segundas usando a estrutura de matriz k-diagonal
-void createHessCoefficientsMatrixD (void **secondDerivatives, m_diag *hessMatrixD, char **names, int count, int k, double *Xvector){
-	
-	//numero de diagonais da matriz k-diagonal
-	int diags;
+//zera o tamanho das diagonais para que a função de baixa possa funcionar
+void zeroMatrixDiag (m_diag* m){
+	for (int i = 0; i<m->k; i++)
+		m->diags[i].tam = 0;
+}
 
-	int aux = k;
-	
-	//primeiro loop para calcular o "quadrado" da matriz k-diagonal
-	for (int i = 0; i < (k/2+1); i++) {
-		diags = aux / 2;
-		for (int j = 0; j < (k/2+1); j++; diags++) {
-			hessMatrixD->diags[diags]->vet[hessMatrixD->diags[diags]->tam++] = evaluator_evaluate(secondDerivatives[(i * count) + j], count, names, Xvector);
+//Calcula as derivadas segundas usando a estrutura de matriz k-diagonal
+void createHessCoefficientsMatrixDiag (void **secondDerivatives, m_diag *hessMatrixD, char **names, int count, double *Xvector){
+	zeroMatrixDiag(hessMatrixD);
+	int k = hessMatrixD->k;
+	int win_start = k/2;
+	int win_end = win_start + k/2;
+	int i;
+	int jd; 
+	int j;
+	t_vet* tmp;
+	for(i = 0; i < k/2; i++){
+		j = 0;
+		for(jd = win_start; jd<=win_end; jd++, j++){
+			//printf("i: %d j: %d jd: %d\n", i, j, jd);
+			tmp = &hessMatrixD->diags[jd];
+			tmp->vet[tmp->tam] = evaluator_evaluate(secondDerivatives[(i * count) + j], count, names, Xvector);	
+			tmp->tam++;
 		}
-		aux -= 2;
+		win_start--;
 	}
-	
-	int j = k/2+1;
-	diags = k-1;
-	for (int i = 1; i < k/2+1; i++; diags--) {
-		hessMatrixD->diags[diags]->vet[hessMatrixD->diags[diags]->tam++] = evaluator_evaluate(secondDerivatives[(i * count) + j], count, names, Xvector);
+	int ja = 0;
+	for(; i<count-k/2; i++){
+		j = ja;
+		ja ++;
+		for(jd = win_start; jd<=win_end; jd++, j++){
+			//printf("i: %d j: %d jd: %d\n", i, j, jd);
+			tmp = &hessMatrixD->diags[jd];
+			tmp->vet[tmp->tam] = evaluator_evaluate(secondDerivatives[(i * count) + j], count, names, Xvector);	
+			tmp->tam++;
+		}
 	}
-	
-	
+	for(; i<count; i++){
+		win_end--;
+		j = ja;
+		ja++;
+		for(jd = win_start; jd<=win_end; jd++, j++){
+			//printf("i: %d j: %d jd: %d\n", i, j, jd);
+			tmp = &hessMatrixD->diags[jd];
+			tmp->vet[tmp->tam] = evaluator_evaluate(secondDerivatives[(i * count) + j], count, names, Xvector);	
+			tmp->tam++;
+		}
+	}
 	return;
 }
 
