@@ -22,6 +22,9 @@ int main (int argc, char **argv) {
 	double** l_test;
 	double **u_test;
 	m_diag* hessD;
+	double **hess;
+	double **lhess;
+	double **uhess;
   int r = scanf ("%d %d %lf %lf %d %d" , &n, &k, &xInitial, &epsilon, &maxIter, &hessSteps);
 	//Se n e k não forem válidos, retorna erro e para execução
 	if(k%2==0 || k<3){
@@ -57,6 +60,9 @@ int main (int argc, char **argv) {
 	l_NewMod 					= createDoubleMatrix(n);
 	u_NewMod					= createDoubleMatrix(n);
 	hessD							= createDoubleMatrixD(n, k);
+	/* hess = createDoubleMatrix(n);
+	lhess = createDoubleMatrix(n);
+	uhess = createDoubleMatrix(n); */
 
 	//Cria a string que descreve a função para a libmatheval
 	generateStringFunction(funcString, func1, func2);
@@ -85,7 +91,6 @@ int main (int argc, char **argv) {
 		if (! (i%hessSteps)){
 			createHessCoefficientsMatrixDiag(secondDerivatives, hessD, variableNames, n, xVecNewMod);
 			gen_l_u_diag(hessD, l_NewMod, u_NewMod, n);
-		
 		}
 
 		//Gera o y que é L*y = frstDeriv

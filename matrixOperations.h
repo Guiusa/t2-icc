@@ -73,3 +73,5 @@ void gen_l_u_diag(m_diag *m, double** l, double** u, int s);
 void get_yc(double* y, double *frstDeriv, double **l, int s);
 
 int mul_yu(double* y, double** u, double* delta, int s);
+
+void printKDiagonal (m_diag *matrix);

@@ -238,6 +238,9 @@ void initial_u(double** u, m_diag* h, int s){
 	int mat_end = k/2;
 	int t = win_end - win_start;
 	int i;
+	int jm = 0; 
+	int jaux = 0;
+	int jd;
 	t_vet* tmp;
 	for(i = 0; i < k/2; i++){
 		for(int j = mat_start; j<=mat_end; j++){
@@ -249,21 +252,32 @@ void initial_u(double** u, m_diag* h, int s){
 		win_start--;
 	}
 	for(; i<s-k/2; i++){
-		for(int j = mat_start; j<=mat_end; j++){
-			tmp = &h->diags[win_start+j];
-			u[i][j] = tmp->vet[tmp->tam];
+		jm = jaux;
+		jd = 0;
+		for(int j = mat_start; j<=mat_end; j++, jm++, jd++){
+			tmp = &h->diags[jd];
+			u[i][jm] = tmp->vet[tmp->tam];
 			tmp->tam++;
 		}
+		mat_start++;
+		mat_end++;
+		jaux++;
 	}
 	for(; i<s; i++){
 		win_end--;
-		mat_start++;
-		for(int j = mat_start; j<=mat_end; j++){
+		for(int j = mat_start; j<=mat_end-1; j++){
 			tmp = &h->diags[win_start+j-mat_start];
 			u[i][j] = tmp->vet[tmp->tam];
 			tmp->tam++;
-		}	
+		}
+		mat_start++;
 	}
+
+	/* for (int i = 0; i < s; i++) {
+		for (int j = 0; j < s; j++)
+			printf(" %lf", u[i][j]);
+		printf("\n");
+	} */
 
 }
 
@@ -302,4 +316,13 @@ int mul_yu(double* y, double** u, double* delta, int s){
 		delta[i] /= u[i][i];
 	}	
 	return 1;
+}
+
+void printKDiagonal (m_diag *matrix) {
+	for (int i = 0; i < matrix->k; i++) {
+		printf("Diagonal %d: ", i);
+		for (int j = 0; j < matrix->diags[i].tam; j++)
+			printf(" %lf", matrix->diags[i].vet[j]);
+		printf("\n");
+	}
 }
