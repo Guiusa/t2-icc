@@ -28,6 +28,8 @@ m_diag* createDoubleMatrixD(int n, int k);
 
 void freeDoubleMatrixD(m_diag* m);
 
+void zeroMatrixDiag(m_diag* m);
+
 void printMatrixDiag(m_diag* m);
 
 double** createDoubleMatrix (int n);

@@ -42,11 +42,6 @@ void createHessCoefficientsMatrix (void **secondDerivatives, double **hessMatrix
     return;
 }
 
-//zera o tamanho das diagonais para que a função de baixa possa funcionar
-void zeroMatrixDiag (m_diag* m){
-	for (int i = 0; i<m->k; i++)
-		m->diags[i].tam = 0;
-}
 
 //Calcula as derivadas segundas usando a estrutura de matriz k-diagonal
 void createHessCoefficientsMatrixDiag (void **secondDerivatives, m_diag *hessMatrixD, char **names, int count, double *Xvector){

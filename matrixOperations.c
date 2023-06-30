@@ -3,6 +3,7 @@
 // Fernando Gbur dos Santos - GRR20211761
 #include "matrixOperations.h"
 
+
 //aloca uma matrix k-diagonal
 	m_diag* createDoubleMatrixD(int n, int k){
 	m_diag* tmp = (m_diag*) malloc(sizeof(m_diag));
@@ -35,12 +36,17 @@ void printMatrixDiag(m_diag* m){
    }
 }
 
+void zeroMatrixDiag(m_diag* m){
+	for(int i = 0; i<m->k; i++)
+		m->diags[i].tam = 0;
+}
+
 // Aloca uma matriz de n*n doubles
 double** createDoubleMatrix (int n) {
     double **matrix = malloc (sizeof(double*) * n);
 
     for (int i = 0; i < n; i++)
-        matrix[i] = malloc (sizeof(double) * n);
+    	matrix[i] = malloc (sizeof(double) * n);
     
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
@@ -223,24 +229,55 @@ void gen_l_u(double **l, double **u, int s){
 	return;
 }
 
-void gen_l_u_diag(m_diag *m, double** l, double** u, int s){
-	initial_l(l, s);
-	int k = m->k;
-	int princ = k/2;
-	int aux = princ;
-	for(int j = 0; j<s; j++){
-		double diag_p = m->diags[princ].vet[j];
-		
-		for(int i = 1; i<=aux; i++){
-			//printf("Diagonal é %d %d\n", princ+i, j);
-			printf("%.3lf %.3lf\n", m->diags[princ-i].vet[j], diag_p);
-			double mp = m->diags[princ-i].vet[j] / diag_p;
-			
-			l[j+i][j] = mp;
+void initial_u(double** u, m_diag* h, int s){
+	zeroMatrixDiag(h);
+	int k = h->k;
+	int win_start = k/2;
+	int win_end = win_start + k/2;
+	int mat_start = 0;
+	int mat_end = k/2;
+	int t = win_end - win_start;
+	int i;
+	t_vet* tmp;
+	for(i = 0; i < k/2; i++){
+		for(int j = mat_start; j<=mat_end; j++){
+			tmp = &h->diags[win_start+j];
+			u[i][j] = tmp->vet[tmp->tam];
+			tmp->tam ++;
 		}
-		if(j>=s-princ-1) aux--;
+		mat_end++;
+		win_start--;
+	}
+	for(; i<s-k/2; i++){
+		for(int j = mat_start; j<=mat_end; j++){
+			tmp = &h->diags[win_start+j];
+			u[i][j] = tmp->vet[tmp->tam];
+			tmp->tam++;
+		}
+	}
+	for(; i<s; i++){
+		win_end--;
+		mat_start++;
+		for(int j = mat_start; j<=mat_end; j++){
+			tmp = &h->diags[win_start+j-mat_start];
+			u[i][j] = tmp->vet[tmp->tam];
+			tmp->tam++;
+		}	
 	}
 
+}
+
+
+void gen_l_u_diag(m_diag *m, double** l, double** u, int s){
+	initial_l(l, s);
+	initial_u(u, m, s);
+	int k = m->k;
+	int princ = k/2;
+	int aux1 = princ;
+	int j;	
+
+	gen_l_u(l, u, s);
+	
 }
 
 //Realiza o primeiro passo da multiplicação com L e U
