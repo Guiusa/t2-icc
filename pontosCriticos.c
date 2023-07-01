@@ -3,12 +3,13 @@
 // Fernando Gbur dos Santos - GRR20211761
 #include "mathOperations.h"
 #include "iolib.h"
+#include "time.h"
 
 int main (int argc, char **argv) {
-	//Declaração das variáveis do programa
-	FILE* output = NULL;
-	int desviarSaida = 0;
-	int retorno = 0;
+  //Declaração das variáveis do programa
+  FILE* output = NULL;
+  int desviarSaida = 0;
+  int retorno = 0;
   void *func;
   int n, k, func1, func2 , count, maxIter, hessSteps;
   char *funcString;
@@ -18,13 +19,12 @@ int main (int argc, char **argv) {
   double xInitial, epsilon;
   double *xVecNewMod, *yNewMod, *deltaNewMod;
   double *derivEvalNewMod;
-	double **hessNewMod, **l_NewMod, **u_NewMod;
-	double** l_test;
-	double **u_test;
-	m_diag* hessD;
-	double **hess;
-	double **lhess;
-	double **uhess;
+  double **hessNewMod, *l_NewMod, *u_NewMod;
+  m_diag* hessD;
+
+  clock_t start_time, end_time;
+  double total_time;
+
   int r = scanf ("%d %d %lf %lf %d %d" , &n, &k, &xInitial, &epsilon, &maxIter, &hessSteps);
 	//Se n e k não forem válidos, retorna erro e para execução
 	if(k%2==0 || k<3){
@@ -42,27 +42,26 @@ int main (int argc, char **argv) {
 	}
 
 	//Limites superiores em cada somatório
-  func1 = (n - (k/2));
+    func1 = (n - (k/2));
 	func2 = k/2;
 
 	//Bloco para alocar e inicializar todas as variáveis dinâmicas
-	funcString 				= malloc(100 * func1 * func2 * sizeof(char));
+	funcString 			= malloc(100 * func1 * func2 * sizeof(char));
 	strcpy(funcString, "");
-	xVecNewMod 				= malloc (sizeof(double) * n);
+	xVecNewMod 			= malloc (sizeof(double) * n);
 	copyInitialVector(n, xInitial, xVecNewMod);
-	yNewMod						= malloc (sizeof(double) * n);
-	deltaNewMod				= malloc (sizeof(double) * n);
+	yNewMod				= malloc (sizeof(double) * n);
+	deltaNewMod			= malloc (sizeof(double) * n);
 	variableNames       = createVariableNamesVector(n);
 	firstDerivatives 	= malloc (sizeof(void*) * n);
 	derivEvalNewMod		= malloc (sizeof(double) * n);
-	//secondDerivatives = createVoidMatrix(n);
 	secondDerivatives   = malloc (sizeof(void*) * n * n);
-	l_NewMod 					= createDoubleMatrix(n);
-	u_NewMod					= createDoubleMatrix(n);
-	hessD							= createDoubleMatrixD(n, k);
-	/* hess = createDoubleMatrix(n);
-	lhess = createDoubleMatrix(n);
-	uhess = createDoubleMatrix(n); */
+	l_NewMod 			= malloc (sizeof(double*) * n * n);
+	u_NewMod			= malloc (sizeof(double*) * n * n);
+	hessD				= createDoubleMatrixD(n, k);
+
+	//inicia a contagem do tempo
+	start_time = clock();
 
 	//Cria a string que descreve a função para a libmatheval
 	generateStringFunction(funcString, func1, func2);
@@ -71,14 +70,13 @@ int main (int argc, char **argv) {
   assert(func);
   //coloca as variáveis da função no vetor variableNames e quantidade delas em count
 	evaluator_get_variables(variableNames, n);
-  for (int i = 0; i < n; i++) {
-    firstDerivatives[i] = evaluator_derivative(func, variableNames[i]);
-  }
 
   //cria a matriz de derivadas secundárias
-  for (int i = 0; i < n; i++) 
+  for (int i = 0; i < n; i++) {
+    firstDerivatives[i] = evaluator_derivative(func, variableNames[i]);
 		for (int j = 0; j < n; j++)
     		secondDerivatives[(i * n) + j] = evaluator_derivative(firstDerivatives[i], variableNames[j]);
+  }
 	
 	for (int i = 0; i < maxIter; i++) {
 		evalueteFirstDerivatives(firstDerivatives, derivEvalNewMod, variableNames, n, xVecNewMod);
@@ -110,20 +108,27 @@ int main (int argc, char **argv) {
 		
 		printStep(output, func, n, variableNames, xVecNewMod, i);
 	}
+
+	end_time = clock();
+
+	total_time = ((double) (end_time - start_time)) / CLOCKS_PER_SEC * 1000;
+
+	printf("Tempo Decorrido em milisegundos:%lf\n" , total_time);
 		
 	//Libera todas as variáveis dinâmicas
-	liberar:
-  free(xVecNewMod);
+liberar:
+  	free(xVecNewMod);
 	free(yNewMod);
 	free(deltaNewMod);
 	free(derivEvalNewMod);
 	freeVoidVector(n, firstDerivatives);
-	freeDoubleMatrix(n, l_NewMod);
-	freeDoubleMatrix(n, u_NewMod);
-	free(secondDerivatives);
-  freeVariableNamesVector(n , variableNames);
-  free(funcString);
+	freeVoidVector(n*n, secondDerivatives);
+	free(l_NewMod);
+	free(u_NewMod);
+  	freeVariableNamesVector(n , variableNames);
+  	free(funcString);
 	freeDoubleMatrixD(hessD);
+	evaluator_destroy(func);
 	if(desviarSaida) fclose(output);
 	return retorno;
 }

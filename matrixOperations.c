@@ -5,7 +5,7 @@
 
 
 //aloca uma matrix k-diagonal
-	m_diag* createDoubleMatrixD(int n, int k){
+m_diag* createDoubleMatrixD(int n, int k){
 	m_diag* tmp = (m_diag*) malloc(sizeof(m_diag));
 	tmp->diags = malloc(k * sizeof(t_vet));
 	tmp->k = k;
@@ -99,8 +99,8 @@ void freeVoidMatrix (int n, void ***matrix) {
 
 //libera espaço dos objetos da libmatheval
 void freeVoidVector(int n, void** v){
-	//for (int i=0; i<n; i++)
-		//evaluator_destroy(v[i]);
+	for (int i=0; i<n; i++)
+		evaluator_destroy(v[i]);
 	free(v);
 }
 
@@ -206,30 +206,30 @@ double** multiplyMatrix(double **a, double **b, int s){
 }
 
 //coloca o valor 1 na diagonal principal da matriz l
-void initial_l(double **l, int s){
+void initial_l(double *l, int s){
 	for(int i = 0; i<s; i++)
-		l[i][i] = 1;
+		l[(i * s) + i] = 1;
 }
 
 //realiza a fatoração lu da matriz hessiana
-void gen_l_u(double **l, double **u, int s){
+void gen_l_u(double *l, double *u, int s){
 	initial_l(l, s);
 	for(int j = 0; j<s; j++){
 		//Para cada linha embaixo da diagonal, realiza os paços da fatoração LU
 		for(int i = j+1; i<s; i++){
-			double mp = u[i][j] / u[j][j];
-			l[i][j] = mp;
+			double mp = u[(i * s) + j] / u[(j * s) + j];
+			l[i * s + j] = mp;
 
-			u[i][j] = 0;
+			u[(i * s) + j] = 0;
 			for(int jp=j+1; jp<s; jp++)
-				u[i][jp] = u[i][jp] - (u[j][jp] * mp);
+				u[(i * s) + jp] = u[(i * s) + jp] - (u[(j * s) + jp] * mp);
 		}		
 	}
 
 	return;
 }
 
-void initial_u(double** u, m_diag* h, int s){
+void initial_u(double *u, m_diag *h, int s){
 	zeroMatrixDiag(h);
 	int k = h->k;
 	int win_start = k/2;
@@ -245,7 +245,7 @@ void initial_u(double** u, m_diag* h, int s){
 	for(i = 0; i < k/2; i++){
 		for(int j = mat_start; j<=mat_end; j++){
 			tmp = &h->diags[win_start+j];
-			u[i][j] = tmp->vet[tmp->tam];
+			u[(i * s) + j] = tmp->vet[tmp->tam];
 			tmp->tam ++;
 		}
 		mat_end++;
@@ -256,7 +256,7 @@ void initial_u(double** u, m_diag* h, int s){
 		jd = 0;
 		for(int j = mat_start; j<=mat_end; j++, jm++, jd++){
 			tmp = &h->diags[jd];
-			u[i][jm] = tmp->vet[tmp->tam];
+			u[(i * s) + jm] = tmp->vet[tmp->tam];
 			tmp->tam++;
 		}
 		mat_start++;
@@ -267,22 +267,15 @@ void initial_u(double** u, m_diag* h, int s){
 		win_end--;
 		for(int j = mat_start; j<=mat_end-1; j++){
 			tmp = &h->diags[win_start+j-mat_start];
-			u[i][j] = tmp->vet[tmp->tam];
+			u[(i * s) + j] = tmp->vet[tmp->tam];
 			tmp->tam++;
 		}
 		mat_start++;
 	}
-
-	/* for (int i = 0; i < s; i++) {
-		for (int j = 0; j < s; j++)
-			printf(" %lf", u[i][j]);
-		printf("\n");
-	} */
-
 }
 
 
-void gen_l_u_diag(m_diag *m, double** l, double** u, int s){
+void gen_l_u_diag(m_diag *m, double *l, double *u, int s){
 	initial_l(l, s);
 	initial_u(u, m, s);
 	int k = m->k;
@@ -295,25 +288,25 @@ void gen_l_u_diag(m_diag *m, double** l, double** u, int s){
 }
 
 //Realiza o primeiro passo da multiplicação com L e U
-void get_yc(double* y, double *frstDeriv, double **l, int s){
+void get_yc(double* y, double *frstDeriv, double *l, int s){
 	for(int i = 0; i<s; i++){
 		y[i] = -frstDeriv[i];
 		for(int j = 0; j<i; j++)
-			y[i] -= l[i][j]*y[j];
+			y[i] -= l[(i * s) + j]*y[j];
 	}
 	return;
 }
 
 //Realiza o segundo passo da multiplicação com L e U
-int mul_yu(double* y, double** u, double* delta, int s){
+int mul_yu(double *y, double *u, double *delta, int s){
 	for(int i = s-1; i>=0; i--){
 		//caso haja um 0 na diagonal principal, sistema é impossível
-		if(u[i][i] == 0)
+		if(u[(i * s) + i] == 0)
 			return 0;
 		delta[i] = y[i];
 		for(int j = i+1; j<s; j++)
-			delta[i] -= u[i][j]*delta[j];
-		delta[i] /= u[i][i];
+			delta[i] -= u[(i * s) + j]*delta[j];
+		delta[i] /= u[(i * s) + i];
 	}	
 	return 1;
 }
