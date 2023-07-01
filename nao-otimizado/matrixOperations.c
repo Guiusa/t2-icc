@@ -58,6 +58,22 @@ void copyInitialVector (int n, double num, double *vector) {
     return;
 }
 
+char ** createVariableNamesVector (int n) {
+	char **aux = (char**) malloc (sizeof(char *) * n);
+
+	for (int i = 0; i < n; i ++)
+		aux[i] = (char*) malloc (sizeof(char) * 25);
+	
+	return aux;
+}
+
+void freeVariableNamesVector (int n, char **vector) {
+	for (int i = 0; i < n; i++)
+		free(vector[i]);
+	
+	free(vector);
+}
+
 //copia a matriz a dentro da matriz b
 void copy_matrixes(double **a, double **b, int s){
 	for(int i = 0; i<s; i++)

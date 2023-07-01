@@ -2,11 +2,12 @@
 # Guiusepe Oneda Dal Pai - GRR20210572
 # Fernando Gbur dos Santos - GRR20211761
 
-FLAGS = -O3 -mavx -march=native -O3 
-OBJS = matrixOperations.c mathOperations.c iolib.c
+CFLAGS = -O3 -mavx -march=native -O3 -DLIKWID_PERFMON -g -I${LIKWID_INCLUDE}
+LFLAGS = -lm -L${LIKWID_LIB} -llikwid
+OBJS = matrixOperations.c mathOperations.c iolib.c mymatheval.c
 
 all:
-		gcc ${FLAGS} pontosCriticos.c  ${OBJS} -o pontosCriticos -lm -I/usr/include -L/usr/lib -lmatheval
+		gcc ${CFLAGS} pontosCriticos.c  ${OBJS} -o pontosCriticos $(LFLAGS)
 
 purge:
 		-rm -f pontosCriticos

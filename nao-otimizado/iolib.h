@@ -3,7 +3,7 @@
 // Fernando Gbur dos Santos - GRR20211761
 #include <stdio.h>
 #include <string.h>
-#include <matheval.h>
+#include "mymatheval.h"
 
 void printDoubleMatrix(double** m, int s);
 

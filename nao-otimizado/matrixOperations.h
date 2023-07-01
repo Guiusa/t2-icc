@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <matheval.h>
 #include <math.h>
+#include "mymatheval.h"
 
 double** createDoubleMatrix (int n);
 
@@ -19,6 +19,10 @@ void freeVoidMatrix (int n, void ***matrix);
 void freeVoidVector(int n, void** v);
 
 void copyInitialVector (int n, double num,double *vector);
+
+char ** createVariableNamesVector (int n);
+
+void freeVariableNamesVector (int n, char **vector);
 
 void copyDoubleVector (double *a, double *b, int s);
 

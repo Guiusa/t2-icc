@@ -3,7 +3,6 @@
 // Fernando Gbur dos Santos - GRR20211761
 #include <stdio.h>
 #include <string.h>
-#include <matheval.h>
 #include <math.h>
 #include "matrixOperations.h"
 #include "iolib.h"

@@ -4,6 +4,7 @@
 #include "mathOperations.h"
 #include "iolib.h"
 #include "time.h"
+#include <likwid.h>
 
 int main (int argc, char **argv) {
   //Declaração das variáveis do programa
@@ -21,6 +22,8 @@ int main (int argc, char **argv) {
   double *derivEvalNewMod;
   double **hessNewMod, *l_NewMod, *u_NewMod;
   m_diag* hessD;
+
+  LIKWID_MARKER_INIT;
 
   clock_t start_time, end_time;
   double total_time;
@@ -61,6 +64,7 @@ int main (int argc, char **argv) {
 	hessD				= createDoubleMatrixD(n, k);
 
 	//inicia a contagem do tempo
+	LIKWID_MARKER_START("otimizado");
 	start_time = clock();
 
 	//Cria a string que descreve a função para a libmatheval
@@ -98,6 +102,8 @@ int main (int argc, char **argv) {
 		if (! mul_yu(yNewMod, u_NewMod, deltaNewMod, n)){
 			returnsError("Função gerada causa um sistema com solução impossível", "");
 			retorno = 3;
+			LIKWID_MARKER_STOP("otimizado");
+			end_time = clock();
 			goto liberar;		
 		}
 		if (norm(deltaNewMod, n) < epsilon)
@@ -109,6 +115,7 @@ int main (int argc, char **argv) {
 		printStep(output, func, n, variableNames, xVecNewMod, i);
 	}
 
+	LIKWID_MARKER_STOP("otimizado");
 	end_time = clock();
 
 	total_time = ((double) (end_time - start_time)) / CLOCKS_PER_SEC * 1000;
@@ -116,8 +123,10 @@ int main (int argc, char **argv) {
 	printf("Tempo Decorrido em milisegundos:%lf\n" , total_time);
 		
 	//Libera todas as variáveis dinâmicas
+
 liberar:
-  	free(xVecNewMod);
+    LIKWID_MARKER_CLOSE;
+	free(xVecNewMod);
 	free(yNewMod);
 	free(deltaNewMod);
 	free(derivEvalNewMod);

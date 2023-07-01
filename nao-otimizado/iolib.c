@@ -13,9 +13,11 @@ void printDoubleMatrix(double** m, int s){
 }
 
 void printDoubleVector(double *v, int s){
-	for (int i = 0; i<s; i++)
-		printf("%1.5f ", v[i]);
-	printf("\n");
+	for (int i = 0; i < s; i++){
+		for (int j = 0; j < s; j++)
+			printf("%1.5f ", v[(i * s) + j]);
+		printf("\n");
+	}
 }
 
 //Printa um erro com background vermelho e o uso correto com o fundo verde, Se 

@@ -5,13 +5,15 @@
 #include "mathOperations.h"
 #include "iolib.h"
 #include "time.h"
+#include <likwid.h>
+#include "mymatheval.h"
 
 int main (int argc, char **argv) {
 	//Declaração das variáveis do programa
 	FILE* output = NULL;
 	int desviarSaida = 0;
 	int retorno = 0;
-    int n, k, func1, func2 , count, maxIter, execNewMod, hessSteps;
+    int n, k, func1, func2, maxIter, execNewMod, hessSteps;
     char *funcString;
     void *func;
     void **firstDerivatives;
@@ -21,6 +23,8 @@ int main (int argc, char **argv) {
     double *xVecNewMod, *yNewMod, *deltaNewMod;
     double *derivEvalNewMod;
 	double **hessNewMod, **l_NewMod, **u_NewMod;
+
+	LIKWID_MARKER_INIT;
 	
 	clock_t start_time, end_time;
 	double total_time;
@@ -54,11 +58,13 @@ int main (int argc, char **argv) {
 	deltaNewMod			= malloc (sizeof(double) * n);
 	firstDerivatives 	= malloc (sizeof(void*) * n);
 	derivEvalNewMod		= malloc (sizeof(double) * n);
+	variableNames       = createVariableNamesVector(n);
 	secondDerivatives 	= createVoidMatrix(n);
 	hessNewMod 			= createDoubleMatrix(n);
 	l_NewMod 			= createDoubleMatrix(n);
 	u_NewMod			= createDoubleMatrix(n);
 
+	LIKWID_MARKER_START("nao-otimizado");
 	start_time = clock();
 	
 	//Cria a string que descreve a função para a libmatheval
@@ -67,19 +73,19 @@ int main (int argc, char **argv) {
     func = evaluator_create(funcString);
     assert(func);
     //coloca as variáveis da função no vetor variableNames e quantidade delas em count
-    evaluator_get_variables(func, &variableNames, &count);
+    evaluator_get_variables(variableNames, n);
 
     //cria o vetor de derivadas primeiras e guarda o valor calculado em frstDerivEval
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < n; i++)
         firstDerivatives[i] = evaluator_derivative(func, variableNames[i]);
 
     //cria a matriz de derivadas secundárias
-    for (int i = 0; i < count; i++) 
-		for (int j = 0; j < count; j++)
+    for (int i = 0; i < n; i++) 
+		for (int j = 0; j < n; j++)
     		secondDerivatives[i][j] = evaluator_derivative(firstDerivatives[i], variableNames[j]);
 
 	for (int i = 0; i < maxIter; i++) {
-		evalueteFirstDerivatives(firstDerivatives, derivEvalNewMod, variableNames, count, xVecNewMod);
+		evalueteFirstDerivatives(firstDerivatives, derivEvalNewMod, variableNames, n, xVecNewMod);
 		// se a norma das derivadas primeiras for menor que o epsilon, quebra o laço
 		//printf("%d\t%f\n", i, norm(derivEvalNewMod, n));
 		if (norm(derivEvalNewMod, n) < epsilon)
@@ -88,7 +94,7 @@ int main (int argc, char **argv) {
 		// limita a atualização da matriz de coeficientes da hessiana de acordo com os hess steps
 		//Calcula a hessiana e faz a fatoração L e U
 		if (! (i%hessSteps)){
-			createHessCoefficientsMatrix(secondDerivatives, hessNewMod, variableNames, count, xVecNewMod);
+			createHessCoefficientsMatrix(secondDerivatives, hessNewMod, variableNames, n, xVecNewMod);
 			copy_matrixes(hessNewMod, u_NewMod, n);
 			gen_l_u(derivEvalNewMod, l_NewMod, u_NewMod, n);
 		}
@@ -100,6 +106,8 @@ int main (int argc, char **argv) {
 		if (! mul_yu(yNewMod, u_NewMod, deltaNewMod, n)){
 			returnsError("Função gerada causa um sistema com solução impossível", "");
 			retorno = 3;
+			LIKWID_MARKER_STOP("nao-otimizado");
+			end_time = clock();
 			goto liberar;		
 		}
 	
@@ -112,6 +120,7 @@ int main (int argc, char **argv) {
 		printStep(output, func, n, variableNames, xVecNewMod, i);
 	
 	}
+	LIKWID_MARKER_STOP("nao-otimizado");
 	end_time = clock();
 
 	total_time = ((double) (end_time - start_time)) / CLOCKS_PER_SEC * 1000;
@@ -120,11 +129,13 @@ int main (int argc, char **argv) {
 
 	//Libera todas as variáveis dinâmicas
 	liberar:
+	LIKWID_MARKER_CLOSE;
 	evaluator_destroy(func);
     free(xVecNewMod);
 	free(yNewMod);
 	free(deltaNewMod);
 	free(derivEvalNewMod);
+  	freeVariableNamesVector(n , variableNames);
 	freeVoidVector(n, firstDerivatives);
 	freeVoidMatrix(n, secondDerivatives);
 	freeDoubleMatrix(n, hessNewMod);
