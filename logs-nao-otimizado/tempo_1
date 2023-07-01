@@ -19,15 +19,15 @@ CPU clock:	3.41 GHz
 13	|	0.0002815044489795366752967
 14	|	0.0001640854584371484708571
 15	|	0.0000036795039178983451520
-Tempo Decorrido em milisegundos:0.132000
+Tempo Decorrido em milisegundos:0.133000
 --------------------------------------------------------------------------------
 Group 1: FLOPS_DP
 +------------------------------------------+---------+---------+
 |                   Event                  | Counter |  Core 3 |
 +------------------------------------------+---------+---------+
-|             INSTR_RETIRED_ANY            |  FIXC0  | 9459046 |
-|           CPU_CLK_UNHALTED_CORE          |  FIXC1  | 9987641 |
-|           CPU_CLK_UNHALTED_REF           |  FIXC2  | 9003936 |
+|             INSTR_RETIRED_ANY            |  FIXC0  | 9459099 |
+|           CPU_CLK_UNHALTED_CORE          |  FIXC1  | 9979492 |
+|           CPU_CLK_UNHALTED_REF           |  FIXC2  | 8995132 |
 | FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE |   PMC0  |   41840 |
 |    FP_ARITH_INST_RETIRED_SCALAR_DOUBLE   |   PMC1  |   48045 |
 | FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE |   PMC2  |       0 |
@@ -36,14 +36,14 @@ Group 1: FLOPS_DP
 +----------------------+-----------+
 |        Metric        |   Core 3  |
 +----------------------+-----------+
-|  Runtime (RDTSC) [s] |    0.0259 |
+|  Runtime (RDTSC) [s] |    0.0249 |
 | Runtime unhalted [s] |    0.0029 |
-|      Clock [MHz]     | 3780.3868 |
-|          CPI         |    1.0559 |
-|      DP MFLOP/s      |    5.0915 |
+|      Clock [MHz]     | 3780.9941 |
+|          CPI         |    1.0550 |
+|      DP MFLOP/s      |    5.2843 |
 |    AVX DP MFLOP/s    |         0 |
-|    Packed MUOPS/s    |    1.6172 |
-|    Scalar MUOPS/s    |    1.8571 |
+|    Packed MUOPS/s    |    1.6785 |
+|    Scalar MUOPS/s    |    1.9274 |
 |  Vectorization ratio |   46.5484 |
 +----------------------+-----------+
 

@@ -19,31 +19,31 @@ CPU clock:	3.41 GHz
 13	|	0.0093182065926787575188550
 14	|	0.0068540741892322365816370
 15	|	0.0012640860002945527792995
-Tempo Decorrido em milisegundos:4.766000
+Tempo Decorrido em milisegundos:4.752000
 --------------------------------------------------------------------------------
 Group 1: L3
 +-----------------------+---------+----------+
 |         Event         | Counter |  Core 3  |
 +-----------------------+---------+----------+
-|   INSTR_RETIRED_ANY   |  FIXC0  | 51987446 |
-| CPU_CLK_UNHALTED_CORE |  FIXC1  | 26536517 |
-|  CPU_CLK_UNHALTED_REF |  FIXC2  | 23868638 |
-|    L2_LINES_IN_ALL    |   PMC0  |  1160855 |
-|     L2_TRANS_L2_WB    |   PMC1  |   498179 |
+|   INSTR_RETIRED_ANY   |  FIXC0  | 51986721 |
+| CPU_CLK_UNHALTED_CORE |  FIXC1  | 26304632 |
+|  CPU_CLK_UNHALTED_REF |  FIXC2  | 23667850 |
+|    L2_LINES_IN_ALL    |   PMC0  |   968104 |
+|     L2_TRANS_L2_WB    |   PMC1  |   423546 |
 +-----------------------+---------+----------+
 
 +-------------------------------+-----------+
 |             Metric            |   Core 3  |
 +-------------------------------+-----------+
-|      Runtime (RDTSC) [s]      |    0.0296 |
-|      Runtime unhalted [s]     |    0.0078 |
-|          Clock [MHz]          | 3788.9770 |
-|              CPI              |    0.5104 |
-|  L3 load bandwidth [MBytes/s] | 2510.3638 |
-|  L3 load data volume [GBytes] |    0.0743 |
-| L3 evict bandwidth [MBytes/s] | 1077.3184 |
-| L3 evict data volume [GBytes] |    0.0319 |
-|    L3 bandwidth [MBytes/s]    | 3587.6822 |
-|    L3 data volume [GBytes]    |    0.1062 |
+|      Runtime (RDTSC) [s]      |    0.0292 |
+|      Runtime unhalted [s]     |    0.0077 |
+|          Clock [MHz]          | 3787.7241 |
+|              CPI              |    0.5060 |
+|  L3 load bandwidth [MBytes/s] | 2124.0061 |
+|  L3 load data volume [GBytes] |    0.0620 |
+| L3 evict bandwidth [MBytes/s] |  929.2538 |
+| L3 evict data volume [GBytes] |    0.0271 |
+|    L3 bandwidth [MBytes/s]    | 3053.2598 |
+|    L3 data volume [GBytes]    |    0.0891 |
 +-------------------------------+-----------+
 

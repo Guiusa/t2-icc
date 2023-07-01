@@ -19,28 +19,28 @@ CPU clock:	3.41 GHz
 13	|	0.0019487172878181096072336
 14	|	0.0013790918315742151274705
 15	|	0.0001842068104407278378125
-Tempo Decorrido em milisegundos:0.459000
+Tempo Decorrido em milisegundos:0.419000
 --------------------------------------------------------------------------------
 Group 1: L2CACHE
 +-----------------------+---------+----------+
 |         Event         | Counter |  Core 3  |
 +-----------------------+---------+----------+
-|   INSTR_RETIRED_ANY   |  FIXC0  | 13311075 |
-| CPU_CLK_UNHALTED_CORE |  FIXC1  | 11136248 |
-|  CPU_CLK_UNHALTED_REF |  FIXC2  | 10023212 |
-| L2_TRANS_ALL_REQUESTS |   PMC0  |  1019268 |
-|     L2_RQSTS_MISS     |   PMC1  |   257948 |
+|   INSTR_RETIRED_ANY   |  FIXC0  | 13310256 |
+| CPU_CLK_UNHALTED_CORE |  FIXC1  | 11138965 |
+|  CPU_CLK_UNHALTED_REF |  FIXC2  | 10041814 |
+| L2_TRANS_ALL_REQUESTS |   PMC0  |  1041473 |
+|     L2_RQSTS_MISS     |   PMC1  |   265909 |
 +-----------------------+---------+----------+
 
 +----------------------+-----------+
 |        Metric        |   Core 3  |
 +----------------------+-----------+
-|  Runtime (RDTSC) [s] |    0.0242 |
+|  Runtime (RDTSC) [s] |    0.0233 |
 | Runtime unhalted [s] |    0.0033 |
-|      Clock [MHz]     | 3786.4950 |
-|          CPI         |    0.8366 |
-|    L2 request rate   |    0.0766 |
-|     L2 miss rate     |    0.0194 |
-|     L2 miss ratio    |    0.2531 |
+|      Clock [MHz]     | 3780.3467 |
+|          CPI         |    0.8369 |
+|    L2 request rate   |    0.0782 |
+|     L2 miss rate     |    0.0200 |
+|     L2 miss ratio    |    0.2553 |
 +----------------------+-----------+
 

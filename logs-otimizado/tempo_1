@@ -22,28 +22,28 @@ CPU clock:	3.41 GHz
 Tempo Decorrido em milisegundos:0.126000
 --------------------------------------------------------------------------------
 Group 1: FLOPS_DP
-+------------------------------------------+---------+---------+
-|                   Event                  | Counter |  Core 3 |
-+------------------------------------------+---------+---------+
-|             INSTR_RETIRED_ANY            |  FIXC0  | 9259509 |
-|           CPU_CLK_UNHALTED_CORE          |  FIXC1  | 9980315 |
-|           CPU_CLK_UNHALTED_REF           |  FIXC2  | 9004646 |
-| FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE |   PMC0  |    2176 |
-|    FP_ARITH_INST_RETIRED_SCALAR_DOUBLE   |   PMC1  |   48013 |
-| FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE |   PMC2  |   19840 |
-+------------------------------------------+---------+---------+
++------------------------------------------+---------+----------+
+|                   Event                  | Counter |  Core 3  |
++------------------------------------------+---------+----------+
+|             INSTR_RETIRED_ANY            |  FIXC0  |  9239727 |
+|           CPU_CLK_UNHALTED_CORE          |  FIXC1  | 10004811 |
+|           CPU_CLK_UNHALTED_REF           |  FIXC2  |  9022680 |
+| FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE |   PMC0  |     2176 |
+|    FP_ARITH_INST_RETIRED_SCALAR_DOUBLE   |   PMC1  |    48013 |
+| FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE |   PMC2  |    19840 |
++------------------------------------------+---------+----------+
 
 +----------------------+-----------+
 |        Metric        |   Core 3  |
 +----------------------+-----------+
-|  Runtime (RDTSC) [s] |    0.0257 |
+|  Runtime (RDTSC) [s] |    0.0246 |
 | Runtime unhalted [s] |    0.0029 |
-|      Clock [MHz]     | 3777.3113 |
-|          CPI         |    1.0778 |
-|      DP MFLOP/s      |    5.1180 |
-|    AVX DP MFLOP/s    |    3.0834 |
-|    Packed MUOPS/s    |    0.8554 |
-|    Scalar MUOPS/s    |    1.8655 |
+|      Clock [MHz]     | 3779.0061 |
+|          CPI         |    1.0828 |
+|      DP MFLOP/s      |    5.3465 |
+|    AVX DP MFLOP/s    |    3.2211 |
+|    Packed MUOPS/s    |    0.8936 |
+|    Scalar MUOPS/s    |    1.9488 |
 |  Vectorization ratio |   31.4384 |
 +----------------------+-----------+
 

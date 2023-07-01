@@ -19,31 +19,31 @@ CPU clock:	3.41 GHz
 13	|	0.0019487172878180046564633
 14	|	0.0013790918315740800358798
 15	|	0.0001842068104407068856055
-Tempo Decorrido em milisegundos:0.391000
+Tempo Decorrido em milisegundos:0.387000
 --------------------------------------------------------------------------------
 Group 1: L3
 +-----------------------+---------+----------+
 |         Event         | Counter |  Core 3  |
 +-----------------------+---------+----------+
-|   INSTR_RETIRED_ANY   |  FIXC0  | 12178744 |
-| CPU_CLK_UNHALTED_CORE |  FIXC1  | 10923306 |
-|  CPU_CLK_UNHALTED_REF |  FIXC2  |  9844718 |
-|    L2_LINES_IN_ALL    |   PMC0  |   240214 |
-|     L2_TRANS_L2_WB    |   PMC1  |    45173 |
+|   INSTR_RETIRED_ANY   |  FIXC0  | 12178411 |
+| CPU_CLK_UNHALTED_CORE |  FIXC1  | 10929343 |
+|  CPU_CLK_UNHALTED_REF |  FIXC2  |  9844292 |
+|    L2_LINES_IN_ALL    |   PMC0  |   236320 |
+|     L2_TRANS_L2_WB    |   PMC1  |    43323 |
 +-----------------------+---------+----------+
 
 +-------------------------------+-----------+
 |             Metric            |   Core 3  |
 +-------------------------------+-----------+
-|      Runtime (RDTSC) [s]      |    0.0241 |
+|      Runtime (RDTSC) [s]      |    0.0245 |
 |      Runtime unhalted [s]     |    0.0032 |
-|          Clock [MHz]          | 3781.4356 |
-|              CPI              |    0.8969 |
-|  L3 load bandwidth [MBytes/s] |  636.6336 |
-|  L3 load data volume [GBytes] |    0.0154 |
-| L3 evict bandwidth [MBytes/s] |  119.7210 |
-| L3 evict data volume [GBytes] |    0.0029 |
-|    L3 bandwidth [MBytes/s]    |  756.3546 |
-|    L3 data volume [GBytes]    |    0.0183 |
+|          Clock [MHz]          | 3783.6411 |
+|              CPI              |    0.8974 |
+|  L3 load bandwidth [MBytes/s] |  616.8707 |
+|  L3 load data volume [GBytes] |    0.0151 |
+| L3 evict bandwidth [MBytes/s] |  113.0869 |
+| L3 evict data volume [GBytes] |    0.0028 |
+|    L3 bandwidth [MBytes/s]    |  729.9576 |
+|    L3 data volume [GBytes]    |    0.0179 |
 +-------------------------------+-----------+
 

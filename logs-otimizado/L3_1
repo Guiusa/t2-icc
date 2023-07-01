@@ -19,31 +19,31 @@ CPU clock:	3.41 GHz
 13	|	0.0002815044489789286005083
 14	|	0.0001640854584364551506728
 15	|	0.0000036795039178745841838
-Tempo Decorrido em milisegundos:0.127000
+Tempo Decorrido em milisegundos:0.122000
 --------------------------------------------------------------------------------
 Group 1: L3
 +-----------------------+---------+---------+
 |         Event         | Counter |  Core 3 |
 +-----------------------+---------+---------+
-|   INSTR_RETIRED_ANY   |  FIXC0  | 9239702 |
-| CPU_CLK_UNHALTED_CORE |  FIXC1  | 9897192 |
-|  CPU_CLK_UNHALTED_REF |  FIXC2  | 8913198 |
-|    L2_LINES_IN_ALL    |   PMC0  |  228676 |
-|     L2_TRANS_L2_WB    |   PMC1  |   42472 |
+|   INSTR_RETIRED_ANY   |  FIXC0  | 9240154 |
+| CPU_CLK_UNHALTED_CORE |  FIXC1  | 9915139 |
+|  CPU_CLK_UNHALTED_REF |  FIXC2  | 8939752 |
+|    L2_LINES_IN_ALL    |   PMC0  |  224162 |
+|     L2_TRANS_L2_WB    |   PMC1  |   41761 |
 +-----------------------+---------+---------+
 
 +-------------------------------+-----------+
 |             Metric            |   Core 3  |
 +-------------------------------+-----------+
-|      Runtime (RDTSC) [s]      |    0.0239 |
+|      Runtime (RDTSC) [s]      |    0.0235 |
 |      Runtime unhalted [s]     |    0.0029 |
-|          Clock [MHz]          | 3784.2462 |
-|              CPI              |    1.0712 |
-|  L3 load bandwidth [MBytes/s] |  612.7810 |
-|  L3 load data volume [GBytes] |    0.0146 |
-| L3 evict bandwidth [MBytes/s] |  113.8118 |
+|          Clock [MHz]          | 3779.8318 |
+|              CPI              |    1.0730 |
+|  L3 load bandwidth [MBytes/s] |  609.5418 |
+|  L3 load data volume [GBytes] |    0.0143 |
+| L3 evict bandwidth [MBytes/s] |  113.5566 |
 | L3 evict data volume [GBytes] |    0.0027 |
-|    L3 bandwidth [MBytes/s]    |  726.5928 |
-|    L3 data volume [GBytes]    |    0.0174 |
+|    L3 bandwidth [MBytes/s]    |  723.0984 |
+|    L3 data volume [GBytes]    |    0.0170 |
 +-------------------------------+-----------+
 
